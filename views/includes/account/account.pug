@@ -1,0 +1,248 @@
+link(href='stylesheets/accountmain.css', rel='stylesheet')
+link(href='stylesheets/select2.min.css', rel='stylesheet')
+script(src='javascripts/select2.js')
+.container-fluid
+    .row
+        .col-lg-12
+            .panel.panel-filled.shadow
+                .panel-heading.card-header
+                    .panel-tools
+                        a.panel-toggle
+                            i.fa.fa-chevron-up
+                    | New Admin
+                .panel-body
+                    .container-center.lg.animated.slideInDown
+                        
+                        .panel.panel-filled
+                            .panel-body
+                                p
+                                form#loginForm(action='/', novalidate='')
+                                    .row
+                                        .form-group.col-lg-6
+                                            label Username
+                                            input#username.form-control(type='', value='', name='newusername')
+                                            span.form-text.small Your unique username to app
+                                        .form-group.col-lg-6
+                                            label Password
+                                            input#password.form-control(type='password', value='', name='newpassword')
+                                            span.form-text.small Your hard to guess password
+                                        .form-group.col-lg-6
+                                            label Repeat Password
+                                            input#repeatpassword.form-control(type='password', value='', name='repeatpassword')
+                                            span.form-text.small Please repeat your pasword
+                                        .form-group.col-lg-6
+                                            label Email Address
+                                            input#email.form-control(type='', value='', name='newemail')
+                                            span.form-text.small User address email to contact
+                                        .form-group.col-lg-6
+                                            label Administrator
+                                            br
+                                            select#AdminType.form-control.js-example-basic-single(name='AdminType',onChange="cct(this.value);")
+                                                option(value='CA') Capitol Administrator
+                                                option(value='MA') Municipal Administrator
+                                                option(value='BH') Barangay Hall
+                                                option(value='PS') Police Station
+                                                option(value='AMBU') Ambulance
+                                                option(value='FS') Fire Stations
+                                            span.form-text.small New user access level
+                                        .form-group.col-lg-6#form_prov
+                                            label Province
+                                            br
+                                            select#SelectProvince.form-control.js-example-basic-single(name='Province',onChange="changecat(this.value);")
+                                                option(value='BULACAN') BULACAN
+                                            span.form-text.small User location
+                                        .form-group.col-lg-6#formMun
+                                            label Municipal
+                                            br
+                                            select#Selectmunicipal.form-control.js-example-basic-single(name='municipal',onChange="abrngy(this.value)")
+                                            span.form-text.small User location
+                                        .form-group.col-lg-6#formopt
+                                            label 
+                                            br
+                                            select#SelectOption.form-control.js-example-basic-single(name='Option',onChange="")
+                                            span.form-text.small User location
+                                        script.
+
+                                            
+                                            function cct(value){
+                                                $("#formopt label").text("Barangay")
+                                                switch(value){
+                                                    case "CA":
+                                                        $("#form_prov")
+                                                        $("#Selectmunicipal").prop('disabled',true)
+                                                        $("#SelectOption").prop('disabled',true)
+                                                        break;
+                                                    case "MA":
+                                                        $("#form_prov")
+                                                        $("#Selectmunicipal").prop('disabled',false)
+                                                        $("#SelectOption").prop('disabled',true)
+                                                        break;
+                                                    case "BH":
+                                                        $("#form_prov")
+                                                        $("#Selectmunicipal").prop('disabled',false)
+                                                        $("#SelectOption").prop('disabled',false)
+                                                        $("#formopt label").text("Barangay")
+                                                        break;
+                                                    case "PS":
+                                                        $("#form_prov")
+                                                        $("#Selectmunicipal").prop('disabled',false)
+                                                        $("#SelectOption").prop('disabled',false)
+                                                        $("#formopt label").text("Police Station")
+                                                        break;
+                                                    case "AMBU":
+                                                        $("#form_prov")
+                                                        $("#Selectmunicipal").prop('disabled',false)
+                                                        $("#SelectOption").prop('disabled',false)
+                                                        $("#formopt label").text("Ambulance")
+                                                        break;
+                                                    case "FS":
+                                                        $("#form_prov")
+                                                        $("#Selectmunicipal").prop('disabled',false)
+                                                        $("#SelectOption").prop('disabled',false)
+                                                        $("#formopt label").text("Fire Stations")
+                                                        break;
+                                                }
+                                            }
+                                            var MunicipalByCategory = {
+                                                BULACAN: ["Angat","Balagtas","Baliuag","Bocaue","Bulakan","Bustos","Calumpit","DRT","Guiguinto","Hagonoy","Malolos","Marilao","Meycauayan","Norzagaray","Obando","Pandi","Paombong","Plaridel","Pulilan","San Ildefonso","San Jose Del Monte","San Miguel","San Miguel","San Rafael","Santa Maria"]
+                                            }
+                                            
+                                            function changecat(value){
+                                                if (value.length == 0) {
+                                                        document.getElementById("Selectmunicipal").innerHTML = "<option></option>";
+                                                    }
+                                                else {
+                                                    var catOptions = "";
+                                                    for (categoryId in MunicipalByCategory[value]) {
+                                                        catOptions += "<option value="+MunicipalByCategory[value][categoryId]+">" + MunicipalByCategory[value][categoryId] + "</option>";
+                                                    }
+                                                    document.getElementById("Selectmunicipal").innerHTML = catOptions;
+                                                }
+                                            }
+                                            var BarangayByCategory={
+                                                Angat:["Banaban", "Baybay", "Binagbag", "Donacion", "Encanto", "Laog", "Marungko", "Niugan", "Paltok", "Pulong Yantok", "San Roque", "Santa Cruz", "Santa Lucia","Santo Cristo", "Sulucan","Taboc"],
+                                                Balagtas:["Borol 2nd", "Borol 1st", "Dalig", "Longos", "Panginay", " Pulong Gubat", " San Juan","Santol", "Wawa "],
+                                                Baliuag: ["Bagong Nayon", "Barangca", "Calantipay", "Catulinan", "Concepcion", "Hinukay", "Makinabang", "Matangtubig", "Pagala", "Paitan", "Piel", "Pinagbarilan", "Poblacion", "Sabang", "San Jose", "San Roque", "Santa Barbara", "Santo Cristo", "Santo Niño", "Subic", "Sulivan", "Tangos", "Tarcan", "Tiaong", "Tibag", "Tilapayong"],
+                                                Bocaue:[ "Antipona", "Bagumbayan", "Bambang", "Batia", "Biñang 1st", "Biñang 2nd", "Bolacan", "Bundukan", "Bunlo", "Caingin", "Duhat", "Igulot", "Lolomboy", "Poblacion", "Sulucan", "Taal", "Tambobong", "Turo"],
+                                                Bulakan:["Bagumbayan", "Balubad", "Bambang", "Matungao", "Maysantol", "Perez", "Pitpitan", "San Francisco", "San Jose (Poblacion)", "San Nicolas", "Santa Ana", "Santa Ines", "Taliptip"],
+                                                Bustos:["Bonga Mayor", "Bonga Menor", "Buisan", "Camachilihan", "Cambaog", "Catacte", "Liciada", "Malamig", "Malawak", "Poblacion", "San Pedro", "Talampas", "Tanawan"],
+                                                Calumpit:["Balite", "Balungao", "Buguion", "Bulusan", "Calizon", "Calumpang", "Caniogan", "Corazon", "Frances", "Gatbuca", "Gugo", "Iba Este", "Iba O'Este", "Longos", " Meysulao", "Meyto", "Palimbang", "Panducot", "Pio Cruzcosa", "Poblacion", "Pungo", "San Jose", "San Marcos", "San Miguel", "Santa Lucia", "Santo Niño", "Sapang Bayan", "Sergio Bayan"],
+                                                DRT:["Bayabas", "Kabayunan", "Camachin", "Camachile", "Kalawakan", "Pulong Sampalok", "Talbak"],
+                                                Guiguinto:["Abangan Norte    ", "  Abangan Sur      ", "  Ibayo            ", "  Lambakin         ", "  Lias             ", "  Loma de Gato     ", "  Nagbalon         ", "  Patubig          ", "  Poblacion I  ", "  Poblacion II     ", "  Prenza I         ", "  Prenza II        ", "  Santa Rosa I     ", "  Santa Rosa II    ", "  Saog             " ,"Cutcut", "  Daungan", "Ilang‑Ilang", "Malis", "Panginay", "Poblacion", "Pritil", "Pulong Gubat", "Santa Cruz", "Santa Rita", "Tabang", "Tabe", "Tiaong"],
+                                                Hagonoy: ["Abulalas", "  Carillo", "  Iba", "  Mercado", "  Palapat", "  Pugad", "  Sagrada Familia", "  San Agustin", "  San Isidro", "  San Jose", "  San Juan", "  San Miguel", "  San Nicolas", "  San Pablo", "  San Pascual", "  San Pedro", "  San Roque", "  San Sebastian", "  Santa Cruz", "Santa Elena", "Santa Monica", "Santo Niño (Poblacion)", "Santo Rosario", "Tampok", "Tibaguin"],
+                                                Malolos:[ "Anilao", "Atlag", "Babatnin", "Bagna", "Bagong Bayan", "Balayong", "Balite", "Bangkal", "Barihan", "Bulihan", "Bungahan", "Caingin", "Calero", "Caliligawan", "Canalate", "Caniogan", "Catmon", "Cofradia", "Dakila", "Guinhawa", "Ligas", "Liang", "Longos", "Look 1st", "Look 2nd", "Lugam", "Mabolo", "Mambog", "Masile", "Matimbo", "Mojon", "Namayan", "Niugan", "Pamarawan", "Panasahan", "Pinagbakahan", "San Agustin", "San Gabriel", "San Juan", "San Pablo", "San Vicente (Poblacion)", "Santiago", "Santisima Trinidad", "Santo Cristo", "Santo Niño (Poblacion)", "Santo Rosario (Poblacion)", "Santor", "Sumapang Bata", "Sumapang Matanda", "Taal", "Tikay"],
+                                                Marilao:["  Abangan Norte    ", "  Abangan Sur      ", "  Ibayo            ", "  Lambakin         ", "  Lias             ", "  Loma de Gato     ", "  Nagbalon         ", "  Patubig          ", "  Poblacion I  ", "  Poblacion II     ", "  Prenza I         ", "  Prenza II        ", "  Santa Rosa I     ", "  Santa Rosa II    ", "  Saog             "],
+                                                Meycauayan:["  Bagbaguin        ", "  Bahay Pare  ", "  Bancal        ", "  Banga        ", "  Bayugo         ", "  Caingin         ", "  Calvario        ", "  Camalig       ", "  Hulo         ", "  Iba        ", "  Langka       ", "  Lawa   ", "  Libtong        ", "  Liputan  ", "  Longos          ", "  Malhacan       ", "  Pajo     ", "  Pandayan     ", "  Pantoc          ", "  Perez         ", "  Poblacion       ", "  Saluysoy         ", "  Saint Francis (Gasak)  ", "  Tugatog         ", "  Ubihan         "]
+
+                                            }
+                                            function abrngy(value){
+                                                if (value.length == 0) {
+                                                        document.getElementById("SelectOption").innerHTML = "<option></option>";
+                                                    }
+                                                else {
+                                                    var catOptions = "";
+                                                    for (categoryId in BarangayByCategory[value]) {
+                                                        catOptions += "<option>" + BarangayByCategory[value][categoryId] + "</option>";
+                                                    }
+                                                    document.getElementById("SelectOption").innerHTML = catOptions;
+                                                }
+                                            }
+                                            cct("CA")
+                                            changecat("BULACAN")
+                                            abrngy('Angat')
+                                            var arr =[]
+                                            for(var i = 0; i <= $('#tableOFThis tr').length-1;i++){
+                                                arr.push($("#tableOFThis").find('tr').eq(i).find('td').eq(1).html())
+
+                                            }
+                                            console.log(arr)
+
+                                    div
+                                        button.btn.btn-accent Save
+    .row
+        .col-lg-12
+            .panel.panel-filled.shadow
+                .panel-heading.card-header
+                    .panel-tools
+                        a.panel-toggle
+                            i.fa.fa-chevron-up
+                    | Accounts
+                    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+                    .row
+                        
+                        .form-group.col-lg-3
+                            label User Type
+                            br
+                            select.form-control.js-example-basic-single(name='state')
+                                option(value='AL') Administrator
+                                option(value='WY') Client
+                        .form-group.col-lg-3
+                            label Keyword
+                            input#search.form-control(type='', value='', name='')
+                        .form-group.col-lg-4
+                            label Email Address
+                            input#email.form-control(type='', value='', name='')
+                        .form-group.col-lg-2
+                            label Search
+                            button.btn.btn-accent.form-control Search
+                .panel-body
+                    .container-center.lg.animated.slideInDown
+                        
+                        .panel.panel-filled
+                            .panel-body
+                                table#logsTable.table.table-hover
+                                    thead
+                                        tr
+                                            th(scope='col') #
+                                            th(scope='col') First
+                                            th(scope='col') Last
+                                            th(scope='col') Handle
+                                    tbody
+                                        tr
+                                            th(scope='row') 3
+                                            td Larry
+                                            td the Bird
+                                            td 
+                                                .btn-group-sm.mr-2(role='group', aria-label='Third group')
+                                                    button.btn.btn-secondary(type='button') edit
+                                                    button.btn.btn-secondary(type='button') delete
+                                                    button.btn.btn-secondary(type='button') disable
+                                            
+
+                        nav(aria-label='Page navigation example')
+                            ul.pagination.justify-content-center
+                                li.page-item.disabled
+                                    a.page-link(href='#', tabindex='-1', aria-disabled='true') Previous
+                                li.page-item
+                                    a.page-link(href='#') 1
+                                li.page-item
+                                    a.page-link(href='#') 2
+                                li.page-item
+                                    a.page-link(href='#') 3
+                                li.page-item
+                                    a.page-link(href='#') Next
+
+                                
+
+                                
+    script. 
+        $('.panel-toggle').on('click', function(event){
+            event.preventDefault();
+            var hpanel = $(event.target).closest('div.panel');
+            var icon = $(event.target).closest('i');
+            var body = hpanel.find('div.panel-body');
+            var footer = hpanel.find('div.panel-footer');
+            body.slideToggle(300);
+            footer.slideToggle(200);
+
+            // Toggle icon from up to down
+            icon.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+            hpanel.toggleClass('').toggleClass('panel-collapse');
+            setTimeout(function () {
+                hpanel.resize();
+                hpanel.find('[id^=map-]').resize();
+            }, 50);
+        });
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });

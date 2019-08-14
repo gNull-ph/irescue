@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  link(href='stylesheets/err.css', rel='stylesheet')
+  #main.page-404
+    .container
+      .pad
+      .not-found
+        //img.img-404(alt='404 not found', src='images/404.png')
+        h2.glitch(data-text=error.status) 
+        h2.glitch2(data-text=message,style=("top: 16vh;")) 
+        p(data-text="",style="top: 44vh;position: relative;") It looks like you found a glitch in the matrix...
+        
+
+  //pre #{error.stack}

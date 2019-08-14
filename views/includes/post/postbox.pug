@@ -1,0 +1,197 @@
+script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js')
+
+link(rel='stylesheet', href='/stylesheets/previewMulti.css')
+script(src='/javascripts/base/post.js')
+link(href='stylesheets/select2.min.css', rel='stylesheet')
+script(src='javascripts/select2.js')
+.row.no-gutters
+    .compose-box-footer.rounded-top-0
+        .row
+            .col-md-auto
+                .form-group
+                    select#AdminType.form-control.js-example-basic-single(name='AdminType',onChange="cct(this.value);")
+                        option(value='CA') Capitol Administrator
+                        option(value='MA') Municipal Administrator
+                        option(value='BH') Barangay Hall
+                        option(value='PS') Police Station
+                        option(value='AMBU') Ambulance
+                        option(value='FS') Fire Stations
+            .col-md-auto
+                .form-group#form_prov
+                    select#SelectProvince.form-control.js-example-basic-single(name='Province',onChange="changecat(this.value);")
+                        option(value='BULACAN') BULACAN
+            .col-md-auto
+                .form-group#formMun
+                    select#Selectmunicipal.form-control.js-example-basic-single(name='municipal',onChange="abrngy(this.value)")
+            .col-md-auto
+                .form-group#formopt
+                    select#SelectOption.form-control.js-example-basic-single(name='Option',onChange="")
+    textarea.form-control.rounded-bottom-0(aria-label='With textarea')
+    .compose-box-footer.rounded-top-0
+        .compose-toolbar
+            button.btn.btn-outline-primary(type='button') Post
+            
+style.
+    .simple-compose-box{
+        list-style: none;
+        margin: 0;
+        padding: 0 3px;
+        float: left;
+    }
+    .compose-box-footer{
+        list-style: none;
+        margin: 0;
+        padding: 0 3px;
+        float: left;
+    }
+    .compose-toolbar{
+        list-style: none;
+        margin: 0;
+        padding: 0 3px;
+        float: left;
+    }
+    .rounded-bottom-0 {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        width: 100%;
+    }
+
+    .rounded-top-0 {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        width: 100%;
+    }
+    .select2-results__options{
+        font-size:small;
+    }
+    .select2 {
+        width: auto!important;
+        font-size: small;
+    }
+
+//.custom-file(style="display:none")
+    input#customFile.custom-file-input(type='file', accept="video/*,  video/x-m4v, video/webm, video/x-ms-wmv, video/x-msvideo, video/3gpp, video/flv, video/x-flv, video/mp4, video/quicktime, video/mpeg, video/ogv, .ts, .mkv, image/*, image/heic, image/heif",name='photos',aria-label="Add Photo or Video", multiple)
+    label.custom-file-label(for='customFile') Choose file
+//.preview-images-zone
+script.
+        //- $('.panel-toggle').on('click', function(event){
+        //-     event.preventDefault();
+        //-     var hpanel = $(event.target).closest('div.panel');
+        //-     var icon = $(event.target).closest('i');
+        //-     var body = hpanel.find('div.panel-body');
+        //-     var footer = hpanel.find('div.panel-footer');
+        //-     body.slideToggle(300);
+        //-     footer.slideToggle(200);
+
+        //-     // Toggle icon from up to down
+        //-     icon.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+        //-     hpanel.toggleClass('').toggleClass('panel-collapse');
+        //-     setTimeout(function () {
+        //-         hpanel.resize();
+        //-         hpanel.find('[id^=map-]').resize();
+        //-     }, 50);
+        //- });
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+script.
+
+                                        
+    function cct(value){
+        $("#formopt label").text("Barangay")
+        switch(value){
+            case "CA":
+                $("#form_prov")
+                $("#Selectmunicipal").prop('disabled',true)
+                $("#SelectOption").prop('disabled',true)
+                break;
+            case "MA":
+                $("#form_prov")
+                $("#Selectmunicipal").prop('disabled',false)
+                $("#SelectOption").prop('disabled',true)
+                break;
+            case "BH":
+                $("#form_prov")
+                $("#Selectmunicipal").prop('disabled',false)
+                $("#SelectOption").prop('disabled',false)
+                $("#formopt label").text("Barangay")
+                break;
+            case "PS":
+                $("#form_prov")
+                $("#Selectmunicipal").prop('disabled',false)
+                $("#SelectOption").prop('disabled',false)
+                $("#formopt label").text("Police Station")
+                break;
+            case "AMBU":
+                $("#form_prov")
+                $("#Selectmunicipal").prop('disabled',false)
+                $("#SelectOption").prop('disabled',false)
+                $("#formopt label").text("Ambulance")
+                break;
+            case "FS":
+                $("#form_prov")
+                $("#Selectmunicipal").prop('disabled',false)
+                $("#SelectOption").prop('disabled',false)
+                $("#formopt label").text("Fire Stations")
+                break;
+        }
+    }
+    var MunicipalByCategory = {
+        BULACAN: ["Angat","Balagtas","Baliuag","Bocaue","Bulakan","Bustos","Calumpit","DRT","Guiguinto","Hagonoy","Malolos","Marilao","Meycauayan","Norzagaray","Obando","Pandi","Paombong","Plaridel","Pulilan","San Ildefonso","San Jose Del Monte","San Miguel","San Miguel","San Rafael","Santa Maria"]
+    }
+    
+    function changecat(value){
+        if (value.length == 0) {
+                document.getElementById("Selectmunicipal").innerHTML = "<option></option>";
+            }
+        else{
+            var catOptions = "";
+            for (categoryId in MunicipalByCategory[value]) {
+                catOptions += "<option value="+MunicipalByCategory[value][categoryId]+">" + MunicipalByCategory[value][categoryId] + "</option>";
+            }
+            document.getElementById("Selectmunicipal").innerHTML = catOptions;
+        }
+    }
+    var BarangayByCategory={
+        Angat:["Banaban", "Baybay", "Binagbag", "Donacion", "Encanto", "Laog", "Marungko", "Niugan", "Paltok", "Pulong Yantok", "San Roque", "Santa Cruz", "Santa Lucia","Santo Cristo", "Sulucan","Taboc"],
+        Balagtas:["Borol 2nd", "Borol 1st", "Dalig", "Longos", "Panginay", " Pulong Gubat", " San Juan","Santol", "Wawa "],
+        Baliuag: ["Bagong Nayon", "Barangca", "Calantipay", "Catulinan", "Concepcion", "Hinukay", "Makinabang", "Matangtubig", "Pagala", "Paitan", "Piel", "Pinagbarilan", "Poblacion", "Sabang", "San Jose", "San Roque", "Santa Barbara", "Santo Cristo", "Santo Niño", "Subic", "Sulivan", "Tangos", "Tarcan", "Tiaong", "Tibag", "Tilapayong"],
+        Bocaue:[ "Antipona", "Bagumbayan", "Bambang", "Batia", "Biñang 1st", "Biñang 2nd", "Bolacan", "Bundukan", "Bunlo", "Caingin", "Duhat", "Igulot", "Lolomboy", "Poblacion", "Sulucan", "Taal", "Tambobong", "Turo"],
+        Bulakan:["Bagumbayan", "Balubad", "Bambang", "Matungao", "Maysantol", "Perez", "Pitpitan", "San Francisco", "San Jose (Poblacion)", "San Nicolas", "Santa Ana", "Santa Ines", "Taliptip"],
+        Bustos:["Bonga Mayor", "Bonga Menor", "Buisan", "Camachilihan", "Cambaog", "Catacte", "Liciada", "Malamig", "Malawak", "Poblacion", "San Pedro", "Talampas", "Tanawan"],
+        Calumpit:["Balite", "Balungao", "Buguion", "Bulusan", "Calizon", "Calumpang", "Caniogan", "Corazon", "Frances", "Gatbuca", "Gugo", "Iba Este", "Iba O'Este", "Longos", " Meysulao", "Meyto", "Palimbang", "Panducot", "Pio Cruzcosa", "Poblacion", "Pungo", "San Jose", "San Marcos", "San Miguel", "Santa Lucia", "Santo Niño", "Sapang Bayan", "Sergio Bayan"],
+        DRT:["Bayabas", "Kabayunan", "Camachin", "Camachile", "Kalawakan", "Pulong Sampalok", "Talbak"],
+        Guiguinto:["Abangan Norte    ", "  Abangan Sur      ", "  Ibayo            ", "  Lambakin         ", "  Lias             ", "  Loma de Gato     ", "  Nagbalon         ", "  Patubig          ", "  Poblacion I  ", "  Poblacion II     ", "  Prenza I         ", "  Prenza II        ", "  Santa Rosa I     ", "  Santa Rosa II    ", "  Saog             " ,"Cutcut", "  Daungan", "Ilang‑Ilang", "Malis", "Panginay", "Poblacion", "Pritil", "Pulong Gubat", "Santa Cruz", "Santa Rita", "Tabang", "Tabe", "Tiaong"],
+        Hagonoy: ["Abulalas", "  Carillo", "  Iba", "  Mercado", "  Palapat", "  Pugad", "  Sagrada Familia", "  San Agustin", "  San Isidro", "  San Jose", "  San Juan", "  San Miguel", "  San Nicolas", "  San Pablo", "  San Pascual", "  San Pedro", "  San Roque", "  San Sebastian", "  Santa Cruz", "Santa Elena", "Santa Monica", "Santo Niño (Poblacion)", "Santo Rosario", "Tampok", "Tibaguin"],
+        Malolos:[ "Anilao", "Atlag", "Babatnin", "Bagna", "Bagong Bayan", "Balayong", "Balite", "Bangkal", "Barihan", "Bulihan", "Bungahan", "Caingin", "Calero", "Caliligawan", "Canalate", "Caniogan", "Catmon", "Cofradia", "Dakila", "Guinhawa", "Ligas", "Liang", "Longos", "Look 1st", "Look 2nd", "Lugam", "Mabolo", "Mambog", "Masile", "Matimbo", "Mojon", "Namayan", "Niugan", "Pamarawan", "Panasahan", "Pinagbakahan", "San Agustin", "San Gabriel", "San Juan", "San Pablo", "San Vicente (Poblacion)", "Santiago", "Santisima Trinidad", "Santo Cristo", "Santo Niño (Poblacion)", "Santo Rosario (Poblacion)", "Santor", "Sumapang Bata", "Sumapang Matanda", "Taal", "Tikay"],
+        Marilao:["  Abangan Norte    ", "  Abangan Sur      ", "  Ibayo            ", "  Lambakin         ", "  Lias             ", "  Loma de Gato     ", "  Nagbalon         ", "  Patubig          ", "  Poblacion I  ", "  Poblacion II     ", "  Prenza I         ", "  Prenza II        ", "  Santa Rosa I     ", "  Santa Rosa II    ", "  Saog             "],
+        Meycauayan:["  Bagbaguin        ", "  Bahay Pare  ", "  Bancal        ", "  Banga        ", "  Bayugo         ", "  Caingin         ", "  Calvario        ", "  Camalig       ", "  Hulo         ", "  Iba        ", "  Langka       ", "  Lawa   ", "  Libtong        ", "  Liputan  ", "  Longos          ", "  Malhacan       ", "  Pajo     ", "  Pandayan     ", "  Pantoc          ", "  Perez         ", "  Poblacion       ", "  Saluysoy         ", "  Saint Francis (Gasak)  ", "  Tugatog         ", "  Ubihan         "]
+
+    }
+    function abrngy(value){
+        if (value.length == 0) {
+                document.getElementById("SelectOption").innerHTML = "<option></option>";
+            }
+        else {
+            var catOptions = "";
+            for (categoryId in BarangayByCategory[value]) {
+                catOptions += "<option>" + BarangayByCategory[value][categoryId] + "</option>";
+            }
+            document.getElementById("SelectOption").innerHTML = catOptions;
+        }
+    }
+    cct("CA")
+    changecat("BULACAN")
+    abrngy('Angat')
+    var arr =[]
+    for(var i = 0; i <= $('#tableOFThis tr').length-1;i++){
+        arr.push($("#tableOFThis").find('tr').eq(i).find('td').eq(1).html())
+
+    }
+style.
+    textarea{
+        height: 18pc!important;
+        resize: none;
+    }
+    

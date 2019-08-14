@@ -1,0 +1,43 @@
+link(rel='stylesheet', href='stylesheets/chat_box.css')
+script. 
+    (function($) {
+        var chatbox__title__close = 
+        $(document).ready(function() {
+            $('.contact-profile').click(function(){
+                $('#frame').attr('class','chatbox--closed')
+            })
+            var $chatbox = $('#frame'),
+                $chatboxTitle = $('.chatbox__title'),
+                $chatboxTitleClose = $('.chatbox__title__close'),
+                $chatboxCredentials = $('.chatbox__credentials');
+            $chatboxTitle.on('click', function() {
+                $chatbox.toggleClass('chatbox--tray');
+            });
+            $chatboxTitleClose.on('click', function() {
+                $chatbox.empty()
+            });
+        });
+    })(jQuery);
+#frame
+    .content
+        .contact-profile
+            img(src='http://emilcarlsson.se/assets/harveyspecter.png', alt='')
+            p Harvey Specter
+            .social-media
+                i.fa.fa-facebook(aria-hidden='true')
+                i.fa.fa-twitter(aria-hidden='true')
+                i.fa.fa-instagram(aria-hidden='true')
+            button.chatbox__title__close
+                span
+                    svg(viewBox='0 0 12 12', width='12px', height='12px')
+                        line(stroke='#0084ff', x1='11.75', y1='0.25', x2='0.25', y2='11.75')
+                        line(stroke='#0084ff', x1='11.75', y1='11.75', x2='0.25', y2='0.25')
+        .messages
+            
+        .message-input
+            .wrap
+                input(type='text', placeholder='Write your message...')
+                i.fa.fa-paperclip.attachment(aria-hidden='true')
+                button.submit
+                    i.fa.fa-paper-plane(aria-hidden='true')
+

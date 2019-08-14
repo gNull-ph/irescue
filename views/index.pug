@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
+  link(rel='stylesheet', href='stylesheets/cover.css')
+  script(src='bower_components/jquery/dist/jquery.js')
+  .cover-container.d-flex.w-100.h-100.p-3.mx-auto.flex-column
+    header.masthead.mb-auto
+      .inner
+        h3.masthead-brand I-Rescue
+        nav.nav.nav-masthead.justify-content-center
+          a.nav-link.active(href='#') 
+          a.nav-link(href='#') Features
+          a.nav-link(href='#') Contact
+    main.inner.cover(role='main')
+      h1.cover-heading Cover your page.
+      p.lead
+        | Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.
+      p.lead
+        a.btn.btn-lg.btn-secondary(href='#') Learn more
+    footer.mastfoot.mt-auto
+      .inner
+        p
+          | Cover template for 
+          a(href='https://getbootstrap.com/') Bootstrap
+          | , by 
+          a(href='https://twitter.com/mdo') @mdo
+          | .
