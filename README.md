@@ -1,1 +1,3 @@
 # irescue
+
+SAMPLE CODE
